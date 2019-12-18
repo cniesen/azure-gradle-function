@@ -1,0 +1,43 @@
+plugins {
+	id "java"
+	id "maven"
+    id "lenala.azure.azurefunctions" version "1.0"
+}
+
+group = "com.niesens.azure.function"
+version = "1.0"
+sourceCompatibility = "1.8"
+
+repositories {
+	mavenCentral()
+}
+
+import lenala.azure.gradle.functions.*;
+
+dependencies {
+	implementation 'com.microsoft.azure.functions:azure-functions-java-library:1.3.0'
+}
+
+task azureFunctionsPackage(type: PackageTask) {
+    dependsOn jar
+    appName = "azure-gradle-functions"
+    resourceGroup = "azure-gradle-functions-group"
+    region = "centralus"
+}
+
+task azureFunctionsDeploy(type: DeployTask) {
+    appName = "azure-gradle-functions"
+    resourceGroup = "azure-gradle-functions-group"
+    region = "centralus"
+}
+
+task azureFunctionsRun(type: RunTask) {
+    appName = "azure-gradle-functions"
+    resourceGroup = "azure-gradle-functions-group"
+    region = "centralus"
+}
+
+task azureFunctionsAdd(type: AddTask) {
+    functionPackageName = "com.niesens.azure.function"
+    functionTemplate = "HttpTrigger"
+}
